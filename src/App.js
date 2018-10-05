@@ -118,7 +118,7 @@ class App extends Component {
           ...state,
           loading: false
         }));
-        this.checkingStatus();
+        this.checkStatus();
         this.beginStatusChecks();
       }, 4000)
       console.log(response);
