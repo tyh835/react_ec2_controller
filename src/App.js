@@ -1,13 +1,25 @@
 import React, { Component } from 'react';
-import { Container, Message, Header, Button, Segment } from 'semantic-ui-react';
+import {
+  Container,
+  Message,
+  Header,
+  Button,
+  Segment
+} from 'semantic-ui-react';
 import AWS from 'aws-sdk';
 
-AWS.config.update({region: 'us-west-2', credentials: {
-  accessKeyId: process.env.REACT_APP_AWS_ACCESS_ID,
-  secretAccessKey: process.env.REACT_APP_AWS_SECRET_KEY
-}});
+AWS.config.update({
+  region: 'us-west-2',
+  credentials: {
+    accessKeyId: process.env.REACT_APP_AWS_ACCESS_ID,
+    secretAccessKey: process.env.REACT_APP_AWS_SECRET_KEY
+  }
+});
 
-const ec2 = new AWS.EC2({region: 'us-west-2', apiVersion: '2016-11-15'});
+const ec2 = new AWS.EC2({
+  region: 'us-west-2',
+  apiVersion: '2016-11-15'
+});
 
 const params = {
   InstanceIds: [process.env.REACT_APP_EC2_INSTANCE_ID],
@@ -103,8 +115,8 @@ class App extends Component {
       const response = await ec2.stopInstances(params).promise();
       await setTimeout(() => {
         this.setState(state => ({
-        ...state,
-        loading: false
+          ...state,
+          loading: false
         }));
         this.checkingStatus();
         this.beginStatusChecks();
