@@ -106,6 +106,7 @@ class App extends Component {
         ...state,
         loading: false
         }));
+        this.checkingStatus();
         this.beginStatusChecks();
       }, 4000)
       console.log(response);
@@ -120,7 +121,6 @@ class App extends Component {
   }
 
   beginStatusChecks = () => {
-    this.checkStatus();
     this.checkingStatus = setInterval(this.checkStatus, 1500);
   }
 
