@@ -168,7 +168,12 @@ class App extends Component {
   }
 
   render() {
-    const {error, loading, instanceState, buttonState} = this.state;
+    const {
+      error,
+      loading,
+      instanceState,
+      buttonState
+    } = this.state;
     return (
       <>
       <Container>
