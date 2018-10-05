@@ -6,6 +6,7 @@ import {
   Button,
   Segment
 } from 'semantic-ui-react';
+
 import AWS from 'aws-sdk';
 
 AWS.config.update({
@@ -34,12 +35,26 @@ class App extends Component {
     loading: false
   }
 
+
   handleDismiss = () => {
     this.setState(state => ({
       ...state,
       error: ''
     }))
   }
+
+
+  handleClick = () => {
+    switch (this.state.instanceState) {
+      case 'running':
+        return this.stopServer();
+      case 'stopped':
+        return this.startServer();
+      default:
+        return;
+    }
+  }
+
 
   checkStatus = async () => {
     try {
@@ -76,16 +91,6 @@ class App extends Component {
     }
   }
 
-  serviceController = () => {
-    switch (this.state.instanceState) {
-      case 'running':
-        return this.stopServer();
-      case 'stopped':
-        return this.startServer();
-      default:
-        return;
-    }
-  }
 
   startServer = async () => {
     try {
@@ -103,6 +108,7 @@ class App extends Component {
       }));
     }
   }
+
 
   stopServer = async () => {
     try {
@@ -132,18 +138,22 @@ class App extends Component {
     }
   }
 
+
   beginStatusChecks = () => {
     this.checkingStatus = setInterval(this.checkStatus, 1500);
   }
+
 
   componentDidMount() {
     this.beginStatusChecks();
   }
 
+
   componentWillUnmount() {
     this.stopServer();
     clearInterval(this.checkingStatus);
   }
+
 
   getHeadingColour = () => {
     switch (this.state.instanceState) {
@@ -156,6 +166,7 @@ class App extends Component {
     }
   }
 
+
   getButtonColour = () => {
     switch (this.state.buttonState) {
       case 'Start Server':
@@ -166,6 +177,7 @@ class App extends Component {
         return 'green';
     }
   }
+
 
   render() {
     const {
@@ -184,7 +196,7 @@ class App extends Component {
           <Header as='h1'>VPN Server Status</Header>
           <Header as='h2' color={this.getHeadingColour()}>{instanceState.toUpperCase()}</Header>
           <Container className="main__button">
-            <Button content={buttonState} color={this.getButtonColour()} onClick={this.serviceController} loading={loading} />
+            <Button content={buttonState} color={this.getButtonColour()} onClick={this.handleClick} loading={loading} />
           </Container>
         </Segment>
       </Container>
