@@ -10,15 +10,15 @@ import {
 import AWS from 'aws-sdk';
 
 AWS.config.update({
-  region: 'us-west-2',
+  region: process.env.REACT_APP_AWS_REGION,
   credentials: {
-    accessKeyId: process.env.REACT_APP_AWS_ACCESS_ID,
-    secretAccessKey: process.env.REACT_APP_AWS_SECRET_KEY
+    accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.REACT_APP_AWS_SECRET_ACCESS_KEY
   }
 });
 
 const ec2 = new AWS.EC2({
-  region: 'us-west-2',
+  region: process.env.REACT_APP_AWS_REGION,
   apiVersion: '2016-11-15'
 });
 
