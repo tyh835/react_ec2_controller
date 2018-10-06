@@ -150,7 +150,6 @@ class App extends Component {
 
 
   componentWillUnmount() {
-    this.stopServer();
     clearInterval(this.checkingStatus);
   }
 
