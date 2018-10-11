@@ -1,6 +1,7 @@
 {
   "name": "react-vpn",
   "version": "0.1.0",
+  "license": "MIT",
   "private": true,
   "dependencies": {
     "aws-sdk": "^2.327.0",
