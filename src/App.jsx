@@ -154,7 +154,7 @@ class App extends Component {
   }
 
 
-  getHeadingColour = () => {
+  getStatusColour = () => {
     switch (this.state.instanceState) {
       case 'running':
         return 'green';
@@ -193,7 +193,7 @@ class App extends Component {
       <Container textAlign='center' className="main">
         <Segment padded="very" className="main__content">
           <Header as='h1'>VPN Server Status</Header>
-          <Header as='h2' color={this.getHeadingColour()}>{instanceState.toUpperCase()}</Header>
+          <Header as='h2' color={this.getStatusColour()}>{instanceState.toUpperCase()}</Header>
           <Container className="main__button">
             <Button content={buttonState} color={this.getButtonColour()} onClick={this.handleClick} loading={loading} />
           </Container>
