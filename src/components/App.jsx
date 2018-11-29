@@ -69,6 +69,13 @@ class App extends Component {
             buttonState: 'Stop Server',
             loading: false
           }));
+        case 'terminated':
+          return this.setState(state => ({
+            ...state,
+            instanceState,
+            buttonState: 'Terminated',
+            loading: false
+          }));
         default:
           return this.setState(state => ({
             ...state,
@@ -161,6 +168,7 @@ class App extends Component {
                 color={getButtonColour(instanceState)}
                 onClick={this.handleClick}
                 loading={loading}
+                disabled={instanceState === 'terminated'}
               />
             </Container>
           </Segment>
