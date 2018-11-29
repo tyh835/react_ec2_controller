@@ -13,15 +13,23 @@ code {
     monospace;
 }
 
+.label {
+  margin: 6px !important;
+}
+
 .main {
-  height: 100vh;
+  margin: 2rem;
   display: flex !important;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 
   &__button {
-    height: 20vh;
+    min-width: 120px;
+  }
+
+  &__button--container {
+    height: 4rem;
     display: flex !important;
     align-items: center;
     justify-content: center;

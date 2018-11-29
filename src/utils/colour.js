@@ -18,6 +18,6 @@ export const getButtonColour = instanceState => {
     case 'stopping':
       return 'orange';
     default:
-      return 'green';
+      return 'orange';
   }
 };
