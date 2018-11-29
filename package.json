@@ -18,6 +18,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
+    "format": "prettier es5 --single-quote --write \"{src/**/*.js,src/**/*.jsx}\"",
     "serve": "serve -s build"
   },
   "eslintConfig": {
@@ -30,6 +31,7 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "prettier": "^1.15.2",
     "serve": "^10.0.2"
   }
 }

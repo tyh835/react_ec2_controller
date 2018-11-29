@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import AWS from 'aws-sdk';
 import {
   Container,
   Message,
@@ -7,7 +8,7 @@ import {
   Segment
 } from 'semantic-ui-react';
 
-import AWS from 'aws-sdk';
+import { getStatusColour, getButtonColour } from './utils/colour.js';
 
 AWS.config.update({
   region: process.env.REACT_APP_AWS_REGION,
@@ -23,18 +24,16 @@ const ec2 = new AWS.EC2({
 });
 
 const params = {
-  InstanceIds: [process.env.REACT_APP_EC2_INSTANCE_ID],
+  InstanceIds: JSON.parse(process.env.REACT_APP_EC2_INSTANCE_IDS),
 };
-
 
 class App extends Component {
   state = {
-    instanceState: 'checking...',
+    instanceState: 'pending',
     buttonState: 'Start Server',
     error: '',
-    loading: false
+    loading: true
   }
-
 
   handleDismiss = () => {
     this.setState(state => ({
@@ -42,7 +41,6 @@ class App extends Component {
       error: ''
     }))
   }
-
 
   handleClick = () => {
     switch (this.state.instanceState) {
@@ -55,79 +53,54 @@ class App extends Component {
     }
   }
 
-
   checkStatus = async () => {
     try {
-      const response = await ec2.describeInstanceStatus(params).promise();
-      if (response.InstanceStatuses.length === 0) {
-        return this.setState(state => ({
-          ...state,
-          instanceState: 'stopped',
-          buttonState: 'Start Server'
-        }));
-      }
+      const response = await ec2.describeInstances(params).promise();
+      const instanceState = response.Reservations[0].Instances[0].State.Name;
+      console.log(response)
 
-      const instanceState = response.InstanceStatuses[0].InstanceState.Name;
-
-      if (instanceState === 'running') {
-        this.setState(state => ({
-          ...state,
-          instanceState,
-          buttonState: 'Stop Server',
-          loading: false
-        }));
-      } else {
-        this.setState(state => ({
-          ...state,
-          instanceState,
-        }));
+      switch (instanceState) {
+        case 'stopped':
+          return this.setState(state => ({
+            ...state,
+            instanceState,
+            buttonState: 'Start Server',
+            loading: false
+          }));
+        case 'running':
+          return this.setState(state => ({
+            ...state,
+            instanceState,
+            buttonState: 'Stop Server',
+            loading: false
+          }));
+        default:
+          return this.setState(state => ({
+            ...state,
+            instanceState,
+            buttonState: 'Loading...',
+            loading: true
+          }));
       }
     } catch (err) {
       console.log(err, err.stack);
       return this.setState(state => ({
         ...state,
-        error: 'No server or network connection detected'
+        error: 'Failed to contact server. Check your environment and network connection',
+        loading: false
       }));
     }
   }
-
 
   startServer = async () => {
     try {
-      await this.setState(state => ({
-        ...state,
-        loading: true
-      }));
       const response = await ec2.startInstances(params).promise();
       console.log(response);
-    } catch (err) {
-      return this.setState(state => ({
+      this.setState(state => ({
         ...state,
-        error: err.message,
-        loading: false
+        instanceState: 'pending',
+        loading: true
       }));
-    }
-  }
-
-
-  stopServer = async () => {
-    try {
-      clearInterval(this.checkingStatus)
-      await this.setState(state => ({
-        ...state,
-        loading: true,
-        instanceState: 'Stopping...'
-      }));
-      const response = await ec2.stopInstances(params).promise();
-      await setTimeout(() => {
-        this.setState(state => ({
-          ...state,
-          loading: false
-        }));
-        this.checkStatus();
-        this.beginStatusChecks();
-      }, 4000)
-      console.log(response);
     } catch (err) {
       console.log(err, err.stack);
       return this.setState(state => ({
@@ -138,45 +111,32 @@ class App extends Component {
     }
   }
 
-
-  beginStatusChecks = () => {
-    this.checkingStatus = setInterval(this.checkStatus, 1500);
+  stopServer = async () => {
+    try {
+      const response = await ec2.stopInstances(params).promise();
+      console.log(response);
+      this.setState(state => ({
+        ...state,
+        loading: true,
+        instanceState: 'stopping'
+      }));
+    } catch (err) {
+      console.log(err, err.stack);
+      return this.setState(state => ({
+        ...state,
+        error: err.message,
+        loading: false
+      }));
+    }
   }
-
 
   componentDidMount() {
-    this.beginStatusChecks();
+    this.checkingStatus = setInterval(this.checkStatus, 1500);
   }
-
 
   componentWillUnmount() {
     clearInterval(this.checkingStatus);
   }
-
-
-  getStatusColour = () => {
-    switch (this.state.instanceState) {
-      case 'running':
-        return 'green';
-      case 'stopped':
-        return 'red';
-      default:
-        return 'yellow';
-    }
-  }
-
-
-  getButtonColour = () => {
-    switch (this.state.buttonState) {
-      case 'Start Server':
-        return 'green';
-      case 'Stop Server':
-        return 'orange';
-      default:
-        return 'green';
-    }
-  }
-
 
   render() {
     const {
@@ -185,6 +145,7 @@ class App extends Component {
       instanceState,
       buttonState
     } = this.state;
+
     return (
       <>
       <Container>
@@ -193,9 +154,13 @@ class App extends Component {
       <Container textAlign='center' className="main">
         <Segment padded="very" className="main__content">
           <Header as='h1'>VPN Server Status</Header>
-          <Header as='h2' color={this.getStatusColour()}>{instanceState.toUpperCase()}</Header>
+          <Header as='h2' color={getStatusColour(instanceState)}>
+          {
+            loading ? instanceState.toUpperCase()  + '...' : instanceState.toUpperCase()
+          }
+          </Header>
           <Container className="main__button">
-            <Button content={buttonState} color={this.getButtonColour()} onClick={this.handleClick} loading={loading} />
+            <Button content={buttonState} color={getButtonColour(instanceState)} onClick={this.handleClick} loading={loading} />
           </Container>
         </Segment>
       </Container>
