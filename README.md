@@ -16,10 +16,10 @@ ec2:DescribeInstances
 
 Store environmental variables in a `.env` file in the root directory of the project.
 
-- REACT_APP_AWS_REGION: AWS region to use.
+- `REACT_APP_AWS_REGION`: AWS region to use.
 
-- REACT_APP_AWS_ACCESS_KEY_ID: AWS Access Key Id
+- `REACT_APP_AWS_ACCESS_KEY_ID`: AWS Access Key Id
 
-- REACT_APP_AWS_SECRET_ACCESS_KEY: AWS Secret Access Key
+- `REACT_APP_AWS_SECRET_ACCESS_KEY`: AWS Secret Access Key
 
-- REACT_APP_EC2_INSTANCE_IDS: List of EC2 Instance Ids (JSON Array)
+- `REACT_APP_EC2_INSTANCE_IDS`: List of EC2 Instance Ids (JSON Array)
