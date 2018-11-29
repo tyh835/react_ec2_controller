@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import AWS from 'aws-sdk';
-import { Container, Message } from 'semantic-ui-react';
+import deepEqual from 'fast-deep-equal';
 
 import InstanceCard from './InstanceCard.jsx';
+import ErrorMessage from './ErrorMessage.jsx';
 
 AWS.config.update({
   region: process.env.REACT_APP_AWS_REGION,
@@ -12,10 +13,7 @@ AWS.config.update({
   }
 });
 
-const ec2 = new AWS.EC2({
-  region: process.env.REACT_APP_AWS_REGION,
-  apiVersion: '2016-11-15'
-});
+const ec2 = new AWS.EC2({ apiVersion: '2016-11-15'});
 
 class App extends Component {
   constructor(props) {
@@ -98,10 +96,13 @@ class App extends Component {
             };
         }
       });
-      this.setState(state => ({
-        ...state,
-        instances: instances
-      }));
+
+      if (!deepEqual(instances, this.state.instances)) {
+        this.setState(state => ({
+          ...state,
+          instances: instances
+        }));
+      }
     } catch (err) {
       console.log(err, err.stack);
       this.setState(state => ({
@@ -187,16 +188,7 @@ class App extends Component {
     const { error, instances } = this.state;
     return (
       <>
-        <Container>
-          {error && (
-            <Message
-              header="Something went wrong,"
-              content={error}
-              negative
-              onDismiss={this.handleDismiss}
-            />
-          )}
-        </Container>
+        <ErrorMessage error={error} handleDismiss={this.handleDismiss} />
         {instances.map(instance => (
           <InstanceCard
             instance={instance}

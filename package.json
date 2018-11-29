@@ -6,6 +6,7 @@
   "dependencies": {
     "aws-sdk": "^2.327.0",
     "dotenv": "^6.0.0",
+    "fast-deep-equal": "^2.0.1",
     "node-sass": "^4.9.3",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
