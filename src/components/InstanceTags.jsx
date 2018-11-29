@@ -1,7 +1,7 @@
 import React from 'react';
 import { Label } from 'semantic-ui-react';
 
-const InstanceTags = ({tags}) => {
+const InstanceTags = ({ tags }) => {
   return (
     <>
       {tags.map(tag => (
@@ -10,7 +10,7 @@ const InstanceTags = ({tags}) => {
         </Label>
       ))}
     </>
-  )
-}
+  );
+};
 
-export default InstanceTags
+export default InstanceTags;

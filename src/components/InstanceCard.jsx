@@ -6,6 +6,7 @@ import { getStatusColour, getButtonColour } from '../utils/colour.js';
 
 const InstanceCard = ({ instance, handleButtonClick }) => {
   const { id, instanceState, instanceTags, buttonState, loading } = instance;
+
   return (
     <Container key={id} textAlign="center" className="main">
       <Segment padded="very" className="main__content">

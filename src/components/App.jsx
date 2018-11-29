@@ -13,7 +13,7 @@ AWS.config.update({
   }
 });
 
-const ec2 = new AWS.EC2({ apiVersion: '2016-11-15'});
+const ec2 = new AWS.EC2({ apiVersion: '2016-11-15' });
 
 class App extends Component {
   constructor(props) {
@@ -186,6 +186,7 @@ class App extends Component {
 
   render() {
     const { error, instances } = this.state;
+
     return (
       <>
         <ErrorMessage error={error} handleDismiss={this.handleDismiss} />

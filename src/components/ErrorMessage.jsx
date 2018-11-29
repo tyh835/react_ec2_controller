@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, Message } from 'semantic-ui-react';
 
-const ErrorMessage = ({error, handleDismiss}) => {
+const ErrorMessage = ({ error, handleDismiss }) => {
   return (
     <Container>
       {error && (
@@ -13,7 +13,7 @@ const ErrorMessage = ({error, handleDismiss}) => {
         />
       )}
     </Container>
-  )
-}
+  );
+};
 
 export default ErrorMessage;
