@@ -4,8 +4,8 @@ import './index.scss';
 import 'semantic-ui-css/semantic.min.css';
 
 import App from './components/App.jsx';
-import * as dotenv from 'dotenv';
+import { config } from 'dotenv';
 
-dotenv.config();
+config();
 
 ReactDOM.render(<App />, document.getElementById('root'));

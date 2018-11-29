@@ -1,6 +1,7 @@
 import React from 'react';
-import { Container, Header, Button, Label, Segment } from 'semantic-ui-react';
+import { Container, Header, Button, Segment } from 'semantic-ui-react';
 
+import InstanceTags from './InstanceTags.jsx';
 import { getStatusColour, getButtonColour } from '../utils/colour.js';
 
 const InstanceCard = ({ instance, handleButtonClick }) => {
@@ -9,11 +10,7 @@ const InstanceCard = ({ instance, handleButtonClick }) => {
     <Container key={id} textAlign="center" className="main">
       <Segment padded="very" className="main__content">
         <Header as="h1">{id}</Header>
-        {instanceTags.map(tag => (
-          <Label>
-            {tag.Key}: {tag.Value}
-          </Label>
-        ))}
+        <InstanceTags tags={instanceTags} />
         <Header as="h2" color={getStatusColour(instanceState)}>
           {loading
             ? instanceState.toUpperCase() + '...'
