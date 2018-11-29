@@ -1,12 +1,6 @@
 import React, { Component } from 'react';
 import AWS from 'aws-sdk';
-import {
-  Container,
-  Message,
-  Header,
-  Button,
-  Segment
-} from 'semantic-ui-react';
+import { Container, Message, Header, Button, Segment } from 'semantic-ui-react';
 
 import { getStatusColour, getButtonColour } from './utils/colour.js';
 
@@ -24,7 +18,7 @@ const ec2 = new AWS.EC2({
 });
 
 const params = {
-  InstanceIds: JSON.parse(process.env.REACT_APP_EC2_INSTANCE_IDS),
+  InstanceIds: JSON.parse(process.env.REACT_APP_EC2_INSTANCE_IDS)
 };
 
 class App extends Component {
@@ -33,14 +27,14 @@ class App extends Component {
     buttonState: 'Start Server',
     error: '',
     loading: true
-  }
+  };
 
   handleDismiss = () => {
     this.setState(state => ({
       ...state,
       error: ''
-    }))
-  }
+    }));
+  };
 
   handleClick = () => {
     switch (this.state.instanceState) {
@@ -51,13 +45,13 @@ class App extends Component {
       default:
         return;
     }
-  }
+  };
 
   checkStatus = async () => {
     try {
       const response = await ec2.describeInstances(params).promise();
       const instanceState = response.Reservations[0].Instances[0].State.Name;
-      console.log(response)
+      console.log(response);
 
       switch (instanceState) {
         case 'stopped':
@@ -86,11 +80,12 @@ class App extends Component {
       console.log(err, err.stack);
       return this.setState(state => ({
         ...state,
-        error: 'Failed to contact server. Check your environment and network connection',
+        error:
+          'Failed to contact server. Check your environment and network connection',
         loading: false
       }));
     }
-  }
+  };
 
   startServer = async () => {
     try {
@@ -109,7 +104,7 @@ class App extends Component {
         loading: false
       }));
     }
-  }
+  };
 
   stopServer = async () => {
     try {
@@ -128,7 +123,7 @@ class App extends Component {
         loading: false
       }));
     }
-  }
+  };
 
   componentDidMount() {
     this.checkingStatus = setInterval(this.checkStatus, 1500);
@@ -139,31 +134,38 @@ class App extends Component {
   }
 
   render() {
-    const {
-      error,
-      loading,
-      instanceState,
-      buttonState
-    } = this.state;
+    const { error, loading, instanceState, buttonState } = this.state;
 
     return (
       <>
-      <Container>
-      {error && <Message header='Something went wrong,' content={error} negative onDismiss={this.handleDismiss}/>}
-      </Container>
-      <Container textAlign='center' className="main">
-        <Segment padded="very" className="main__content">
-          <Header as='h1'>VPN Server Status</Header>
-          <Header as='h2' color={getStatusColour(instanceState)}>
-          {
-            loading ? instanceState.toUpperCase()  + '...' : instanceState.toUpperCase()
-          }
-          </Header>
-          <Container className="main__button">
-            <Button content={buttonState} color={getButtonColour(instanceState)} onClick={this.handleClick} loading={loading} />
-          </Container>
-        </Segment>
-      </Container>
+        <Container>
+          {error && (
+            <Message
+              header="Something went wrong,"
+              content={error}
+              negative
+              onDismiss={this.handleDismiss}
+            />
+          )}
+        </Container>
+        <Container textAlign="center" className="main">
+          <Segment padded="very" className="main__content">
+            <Header as="h1">VPN Server Status</Header>
+            <Header as="h2" color={getStatusColour(instanceState)}>
+              {loading
+                ? instanceState.toUpperCase() + '...'
+                : instanceState.toUpperCase()}
+            </Header>
+            <Container className="main__button">
+              <Button
+                content={buttonState}
+                color={getButtonColour(instanceState)}
+                onClick={this.handleClick}
+                loading={loading}
+              />
+            </Container>
+          </Segment>
+        </Container>
       </>
     );
   }

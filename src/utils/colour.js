@@ -1,4 +1,4 @@
-export const getStatusColour = (instanceState) => {
+export const getStatusColour = instanceState => {
   switch (instanceState) {
     case 'running':
       return 'green';
@@ -7,9 +7,9 @@ export const getStatusColour = (instanceState) => {
     default:
       return 'yellow';
   }
-}
+};
 
-export const getButtonColour = (instanceState) => {
+export const getButtonColour = instanceState => {
   switch (instanceState) {
     case 'stopped':
     case 'pending':
@@ -20,4 +20,4 @@ export const getButtonColour = (instanceState) => {
     default:
       return 'green';
   }
-}
+};
