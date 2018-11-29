@@ -119,8 +119,6 @@ class App extends Component {
       InstanceIds: [id]
     };
     try {
-      const response = await ec2.startInstances(params).promise();
-      console.log(response);
       this.setState(state => {
         const instances = state.instances.map(instance => {
           return instance.id !== id
@@ -136,6 +134,8 @@ class App extends Component {
           instances
         };
       });
+      const response = await ec2.startInstances(params).promise();
+      console.log(response);
     } catch (err) {
       console.log(err, err.stack);
       this.setState(state => ({
@@ -150,8 +150,6 @@ class App extends Component {
       InstanceIds: [id]
     };
     try {
-      const response = await ec2.stopInstances(params).promise();
-      console.log(response);
       this.setState(state => {
         const instances = state.instances.map(instance => {
           return instance.id !== id
@@ -167,6 +165,8 @@ class App extends Component {
           instances
         };
       });
+      const response = await ec2.stopInstances(params).promise();
+      console.log(response);
     } catch (err) {
       console.log(err, err.stack);
       this.setState(state => ({
