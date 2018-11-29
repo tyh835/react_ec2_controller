@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import AWS from 'aws-sdk';
 import { Container, Message, Header, Button, Segment } from 'semantic-ui-react';
 
-import { getStatusColour, getButtonColour } from './utils/colour.js';
+import { getStatusColour, getButtonColour } from '../utils/colour.js';
 
 AWS.config.update({
   region: process.env.REACT_APP_AWS_REGION,
