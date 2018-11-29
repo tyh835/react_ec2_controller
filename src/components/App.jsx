@@ -22,21 +22,30 @@ const params = {
 };
 
 class App extends Component {
-  state = {
-    instanceState: 'pending',
-    buttonState: 'Start Server',
-    error: '',
-    loading: true
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      instanceState: 'pending',
+      buttonState: 'Start Server',
+      error: '',
+      loading: true
+    };
 
-  handleDismiss = () => {
+    this.handleDismiss = this.handleDismiss.bind(this)
+    this.handleButtonClick = this.handleButtonClick.bind(this)
+    this.checkStatus = this.checkStatus.bind(this)
+    this.startServer = this.startServer.bind(this)
+    this.stopServer = this.stopServer.bind(this)
+  }
+
+  handleDismiss() {
     this.setState(state => ({
       ...state,
       error: ''
     }));
   };
 
-  handleClick = () => {
+  handleButtonClick() {
     switch (this.state.instanceState) {
       case 'running':
         return this.stopServer();
@@ -47,7 +56,7 @@ class App extends Component {
     }
   };
 
-  checkStatus = async () => {
+  async checkStatus() {
     try {
       // without params, this can describe all instances
       const response = await ec2.describeInstances(params).promise();
@@ -93,7 +102,7 @@ class App extends Component {
     }
   };
 
-  startServer = async () => {
+  async startServer() {
     try {
       const response = await ec2.startInstances(params).promise();
       console.log(response);
@@ -112,7 +121,7 @@ class App extends Component {
     }
   };
 
-  stopServer = async () => {
+  async stopServer() {
     try {
       const response = await ec2.stopInstances(params).promise();
       console.log(response);
@@ -166,7 +175,7 @@ class App extends Component {
               <Button
                 content={buttonState}
                 color={getButtonColour(instanceState)}
-                onClick={this.handleClick}
+                onClick={this.handleButtonClick}
                 loading={loading}
                 disabled={instanceState === 'terminated'}
               />
