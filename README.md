@@ -4,7 +4,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 Simple UI for starting and stopping EC2 instances in the browser.
 
-## IAM Actions
+## IAM Action Permissions
 
 - `ec2:StartInstances`
 
