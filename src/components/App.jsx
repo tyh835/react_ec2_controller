@@ -81,7 +81,7 @@ class App extends Component {
       this.setState(state => ({
         ...state,
         error:
-          'Failed to contact server. Check your environment and network connection',
+          'Failed to contact server. Check your config and network connection',
         loading: false
       }));
     }
