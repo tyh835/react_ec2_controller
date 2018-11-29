@@ -78,7 +78,7 @@ class App extends Component {
       }
     } catch (err) {
       console.log(err, err.stack);
-      return this.setState(state => ({
+      this.setState(state => ({
         ...state,
         error:
           'Failed to contact server. Check your environment and network connection',
@@ -98,7 +98,7 @@ class App extends Component {
       }));
     } catch (err) {
       console.log(err, err.stack);
-      return this.setState(state => ({
+      this.setState(state => ({
         ...state,
         error: err.message,
         loading: false
@@ -117,7 +117,7 @@ class App extends Component {
       }));
     } catch (err) {
       console.log(err, err.stack);
-      return this.setState(state => ({
+      this.setState(state => ({
         ...state,
         error: err.message,
         loading: false
