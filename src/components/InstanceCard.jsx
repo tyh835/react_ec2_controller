@@ -8,8 +8,8 @@ const InstanceCard = ({ instance, handleButtonClick }) => {
   const { id, instanceState, instanceTags, buttonState, loading } = instance;
 
   return (
-    <Container key={id} textAlign="center" className="main">
-      <Segment padded="very" className="main__content">
+    <Container key={id} textAlign="center" className="card">
+      <Segment padded="very" className="card__content">
         <Header as="h1">{id}</Header>
         <InstanceTags tags={instanceTags} />
         <Header as="h2" color={getStatusColour(instanceState)}>
@@ -17,10 +17,10 @@ const InstanceCard = ({ instance, handleButtonClick }) => {
             ? instanceState.toUpperCase() + '...'
             : instanceState.toUpperCase()}
         </Header>
-        <Container className="main__button--container">
+        <Container className="card__button--container">
           <Button
             id={id}
-            className="main__button"
+            className="card__button"
             content={buttonState}
             color={getButtonColour(instanceState)}
             onClick={handleButtonClick}
