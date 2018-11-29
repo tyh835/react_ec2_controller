@@ -80,8 +80,7 @@ class App extends Component {
       console.log(err, err.stack);
       this.setState(state => ({
         ...state,
-        error:
-          'Failed to contact server. Check your config and network connection',
+        error: 'Failed to contact server. Check your config and network connection',
         loading: false
       }));
     }
