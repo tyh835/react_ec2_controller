@@ -150,7 +150,7 @@ class App extends Component {
         </Container>
         <Container textAlign="center" className="main">
           <Segment padded="very" className="main__content">
-            <Header as="h1">VPN Server Status</Header>
+            <Header as="h1">EC2 Server Status</Header>
             <Header as="h2" color={getStatusColour(instanceState)}>
               {loading
                 ? instanceState.toUpperCase() + '...'
