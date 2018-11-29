@@ -49,6 +49,7 @@ class App extends Component {
 
   checkStatus = async () => {
     try {
+      // without params, this can describe all instances
       const response = await ec2.describeInstances(params).promise();
       const instanceState = response.Reservations[0].Instances[0].State.Name;
       console.log(response);
