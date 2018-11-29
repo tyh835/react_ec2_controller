@@ -72,7 +72,6 @@ class App extends Component {
           return this.setState(state => ({
             ...state,
             instanceState,
-            buttonState: 'Loading...',
             loading: true
           }));
       }
