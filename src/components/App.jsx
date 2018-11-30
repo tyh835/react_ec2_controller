@@ -26,7 +26,7 @@ class App extends Component {
     };
 
     this.handleDismiss = this.handleDismiss.bind(this);
-    this.changeInstanceState = this.changeInstanceState.bind(this);
+    this.startStopInstance = this.startStopInstance.bind(this);
     this.describeInstances = this.describeInstances.bind(this);
     this.startInstance = this.startInstance.bind(this);
     this.stopInstance = this.stopInstance.bind(this);
@@ -39,7 +39,7 @@ class App extends Component {
     }));
   }
 
-  StartStopInstance(e) {
+  startStopInstance(e) {
     const instanceId = e.target.id;
     const buttonState = e.target.innerText;
     switch (buttonState) {
@@ -210,7 +210,7 @@ class App extends Component {
           {instances.map(instance => (
             <InstanceCard
               instance={instance}
-              handleButtonClick={this.StartStopInstance}
+              handleButtonClick={this.startStopInstance}
             />
           ))}
         </Container>
