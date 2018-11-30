@@ -24,8 +24,10 @@ describe('<App />', () => {
 
     expect(wrapper.find('Message').length).toEqual(0);
     wrapper.setState({ error: message });
+
     expect(wrapper.find('Message').length).toEqual(1);
     expect(wrapper.find('Message').prop('content')).toEqual(message);
+    wrapper.unmount();
   });
 
   it('renders instance cards with correct state', () => {
@@ -97,12 +99,12 @@ describe('<App />', () => {
     };
 
     expect(wrapper.find('InstanceCard').exists()).toEqual(false);
-
     wrapper.instance().processInstanceData(data);
     wrapper.update();
 
     expect(wrapper.find('InstanceCard').exists()).toEqual(true);
     expect(wrapper.state('instances').length).toEqual(2);
     expect(wrapper.state()).toEqual(state);
+    wrapper.unmount();
   });
 });
