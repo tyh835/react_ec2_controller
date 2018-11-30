@@ -5,7 +5,7 @@ const InstanceTags = ({ tags }) => {
   return (
     <>
       {tags.map(tag => (
-        <Label>
+        <Label className="instance__label">
           {tag.Key}: {tag.Value}
         </Label>
       ))}

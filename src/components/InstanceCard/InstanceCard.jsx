@@ -1,15 +1,16 @@
 import React from 'react';
 import { Container, Header, Button, Segment } from 'semantic-ui-react';
+import './InstanceCard.scss';
 
-import InstanceTags from './InstanceTags.jsx';
-import { getStatusColour, getButtonColour } from '../utils/colour.js';
+import InstanceTags from '../InstanceTags.jsx';
+import { getStatusColour, getButtonColour } from '../../utils/colour.js';
 
 const InstanceCard = ({ instance, handleButtonClick }) => {
   const { id, instanceState, instanceTags, buttonState, loading } = instance;
 
   return (
-    <Container key={id} textAlign="center" className="card">
-      <Segment padded="very" className="card__content">
+    <Container key={id} textAlign="center" className="instance">
+      <Segment padded="very" className="instance__content">
         <Header as="h1">{id}</Header>
         <InstanceTags tags={instanceTags} />
         <Header as="h2" color={getStatusColour(instanceState)}>
@@ -17,10 +18,10 @@ const InstanceCard = ({ instance, handleButtonClick }) => {
             ? instanceState.toUpperCase() + '...'
             : instanceState.toUpperCase()}
         </Header>
-        <Container className="card__button--container">
+        <Container className="instance__button--container">
           <Button
             id={id}
-            className="card__button"
+            className="instance__button"
             content={buttonState}
             color={getButtonColour(instanceState)}
             onClick={handleButtonClick}
