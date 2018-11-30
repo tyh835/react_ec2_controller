@@ -26,10 +26,10 @@ class App extends Component {
     };
 
     this.handleDismiss = this.handleDismiss.bind(this);
-    this.changeServerState = this.changeServerState.bind(this);
-    this.checkStatus = this.checkStatus.bind(this);
-    this.startServer = this.startServer.bind(this);
-    this.stopServer = this.stopServer.bind(this);
+    this.changeInstanceState = this.changeInstanceState.bind(this);
+    this.describeInstances = this.describeInstances.bind(this);
+    this.startInstance = this.startInstance.bind(this);
+    this.stopInstance = this.stopInstance.bind(this);
   }
 
   handleDismiss() {
@@ -39,23 +39,36 @@ class App extends Component {
     }));
   }
 
-  changeServerState(e) {
+  StartStopInstance(e) {
     const instanceId = e.target.id;
     const buttonState = e.target.innerText;
     switch (buttonState) {
       case 'Start Server':
-        return this.startServer(instanceId);
+        return this.startInstance(instanceId);
       case 'Stop Server':
-        return this.stopServer(instanceId);
+        return this.stopInstance(instanceId);
       default:
         return;
     }
   }
 
-  async checkStatus() {
+  async describeInstances() {
     try {
       const response = await ec2.describeInstances().promise();
-      console.log(response);
+      this.processStatusResponse(response);
+    } catch (err) {
+      console.log(err, err.stack);
+      this.setState(state => ({
+        ...state,
+        error:
+          'Failed to contact server. Check your config and network connection',
+        loading: false
+      }));
+    }
+  }
+
+  processInstanceData(response) {
+    try {
       const instances = response.Reservations.reduce(
         (instances, reservation) => {
           return [...instances, ...reservation.Instances];
@@ -116,7 +129,7 @@ class App extends Component {
     }
   }
 
-  async startServer(id) {
+  async startInstance(id) {
     const params = {
       InstanceIds: [id]
     };
@@ -147,7 +160,7 @@ class App extends Component {
     }
   }
 
-  async stopServer(id) {
+  async stopInstance(id) {
     const params = {
       InstanceIds: [id]
     };
@@ -179,7 +192,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.checkingStatus = setInterval(this.checkStatus, 2000);
+    this.checkingStatus = setInterval(this.describeInstances, 2000);
   }
 
   componentWillUnmount() {
@@ -197,7 +210,7 @@ class App extends Component {
           {instances.map(instance => (
             <InstanceCard
               instance={instance}
-              handleButtonClick={this.changeServerState}
+              handleButtonClick={this.StartStopInstance}
             />
           ))}
         </Container>
