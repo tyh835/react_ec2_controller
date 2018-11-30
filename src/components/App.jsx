@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import AWS from 'aws-sdk';
 import deepEqual from 'fast-deep-equal';
 
+import { Container } from 'semantic-ui-react';
+import Header from './Header';
 import InstanceCard from './InstanceCard';
-import ErrorMessage from './ErrorMessage.jsx';
+import ErrorMessage from './ErrorMessage';
 
 AWS.config.update({
   region: process.env.REACT_APP_AWS_REGION,
@@ -189,13 +191,16 @@ class App extends Component {
 
     return (
       <>
-        <ErrorMessage error={error} handleDismiss={this.handleDismiss} />
-        {instances.map(instance => (
-          <InstanceCard
-            instance={instance}
-            handleButtonClick={this.changeServerState}
-          />
-        ))}
+        <Header />
+        <Container style={{ marginTop: '6rem' }}>
+          <ErrorMessage error={error} handleDismiss={this.handleDismiss} />
+          {instances.map(instance => (
+            <InstanceCard
+              instance={instance}
+              handleButtonClick={this.changeServerState}
+            />
+          ))}
+        </Container>
       </>
     );
   }
