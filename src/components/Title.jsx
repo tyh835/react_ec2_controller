@@ -1,7 +1,7 @@
 import React from 'react';
 import { Menu, Header } from 'semantic-ui-react';
 
-export default () => {
+const Title = () => {
   return (
     <Menu fixed="top" fluid widths={1} inverted>
       <Menu.Item>
@@ -12,3 +12,5 @@ export default () => {
     </Menu>
   );
 };
+
+export default Title;

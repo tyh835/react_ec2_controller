@@ -3,9 +3,9 @@ import AWS from 'aws-sdk';
 import deepEqual from 'fast-deep-equal';
 
 import { Container } from 'semantic-ui-react';
-import Header from './Header';
-import InstanceCard from './InstanceCard';
+import Title from './Title';
 import ErrorMessage from './ErrorMessage';
+import InstanceCard from './InstanceCard';
 
 AWS.config.update({
   region: process.env.REACT_APP_AWS_REGION,
@@ -191,7 +191,7 @@ class App extends Component {
 
     return (
       <>
-        <Header />
+        <Title />
         <Container style={{ marginTop: '6rem' }}>
           <ErrorMessage error={error} handleDismiss={this.handleDismiss} />
           {instances.map(instance => (
