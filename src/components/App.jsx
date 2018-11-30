@@ -209,6 +209,7 @@ class App extends Component {
           <ErrorMessage error={error} handleDismiss={this.handleDismiss} />
           {instances.map(instance => (
             <InstanceCard
+              key={instance.id}
               instance={instance}
               handleButtonClick={this.startStopInstance}
             />

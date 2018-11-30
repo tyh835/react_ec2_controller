@@ -9,7 +9,7 @@ const InstanceCard = ({ instance, handleButtonClick }) => {
   const { id, instanceState, instanceTags, buttonState, loading } = instance;
 
   return (
-    <Container key={id} textAlign="center" className="instance">
+    <Container textAlign="center" className="instance">
       <Segment padded="very" className="instance__content">
         <Header as="h1">{id}</Header>
         <InstanceTags tags={instanceTags} />

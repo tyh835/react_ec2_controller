@@ -94,7 +94,7 @@ describe('<App />', () => {
           loading: false
         }
       ]
-    }
+    };
 
     expect(wrapper.find('InstanceCard').exists()).toEqual(false);
 
