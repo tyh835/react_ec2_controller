@@ -66,11 +66,43 @@ describe('<App />', () => {
         }
       ]
     };
+    const state = {
+      error: '',
+      instances: [
+        {
+          id: 'i-1234567890',
+          instanceState: 'stopped',
+          instanceTags: [
+            {
+              Key: 'Name',
+              Value: 'TestServer'
+            }
+          ],
+          buttonState: 'Start Server',
+          loading: false
+        },
+        {
+          id: 'i-0987654321',
+          instanceState: 'running',
+          instanceTags: [
+            {
+              Key: 'Project',
+              Value: 'TestProject'
+            }
+          ],
+          buttonState: 'Stop Server',
+          loading: false
+        }
+      ]
+    }
 
     expect(wrapper.find('InstanceCard').exists()).toEqual(false);
+
     wrapper.instance().processInstanceData(data);
     wrapper.update();
-    expect(wrapper.state('instances').length).toEqual(2);
+
     expect(wrapper.find('InstanceCard').exists()).toEqual(true);
+    expect(wrapper.state('instances').length).toEqual(2);
+    expect(wrapper.state()).toEqual(state);
   });
 });
