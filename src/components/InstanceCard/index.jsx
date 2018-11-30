@@ -1,8 +1,8 @@
 import React from 'react';
 import { Container, Header, Button, Segment } from 'semantic-ui-react';
-import './InstanceCard.scss';
+import './style.scss';
 
-import InstanceTags from '../InstanceTags.jsx';
+import InstanceTags from './InstanceTags.jsx';
 import { getStatusColour, getButtonColour } from '../../utils/colour.js';
 
 const InstanceCard = ({ instance, handleButtonClick }) => {

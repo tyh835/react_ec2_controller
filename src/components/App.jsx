@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import AWS from 'aws-sdk';
 import deepEqual from 'fast-deep-equal';
 
-import InstanceCard from './InstanceCard/InstanceCard.jsx';
+import InstanceCard from './InstanceCard';
 import ErrorMessage from './ErrorMessage.jsx';
 
 AWS.config.update({
