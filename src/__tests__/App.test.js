@@ -18,7 +18,7 @@ describe('<App />', () => {
     expect(wrapper.state().error).toEqual('');
   });
 
-  it('correctly renders error message', () => {
+  it('renders error message correctly', () => {
     const wrapper = mount(<App />);
     const message = 'this is a test message';
 
@@ -28,7 +28,7 @@ describe('<App />', () => {
     expect(wrapper.find('Message').prop('content')).toEqual(message);
   });
 
-  it('correctly renders correct number of instance cards', () => {
+  it('renders instance cards with correct state', () => {
     const wrapper = mount(<App />);
     const data = {
       Reservations: [
