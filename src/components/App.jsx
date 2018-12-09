@@ -55,7 +55,7 @@ class App extends Component {
   async describeInstances() {
     try {
       const response = await ec2.describeInstances().promise();
-      this.processStatusResponse(response);
+      this.processInstanceData(response);
     } catch (err) {
       console.log(err, err.stack);
       this.setState(state => ({
